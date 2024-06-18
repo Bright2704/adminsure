@@ -8,7 +8,7 @@ function ForgotPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://210.246.202.185:3000/forgot-password', {
+            const response = await fetch('https://210.246.202.185:3000/forgot-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
