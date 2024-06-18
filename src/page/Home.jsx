@@ -7,8 +7,8 @@ function Home() {
     const [imageID, setImageID] = useState(null);
     const [imageDetail, setImageDetail] = useState(null);
     const [formData, setFormData] = useState({
-        firstName: 'นาย ดดุนัย',
-        lastName: 'เลื่อนกระโทก',
+        firstName: '',
+        lastName: '',
         accountType: '',
         paymentMethod: '',
         accountNumber: '',
@@ -122,11 +122,11 @@ function Home() {
                             <div className="grid lg:grid-cols-2 gap-4 mt-4">
                                 <div className="grid gap-2">
                                     <label htmlFor="firstName">ชื่อจริง</label>
-                                    <input required readOnly className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="firstName" id="firstName" value={formData.firstName} onChange={handleInputChange} placeholder='ตัวอย่าง : สมชาย' />
+                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="firstName" id="firstName" value={formData.firstName} onChange={handleInputChange} placeholder='ตัวอย่าง : สมชาย' />
                                 </div>
                                 <div className="grid gap-2">
                                     <label htmlFor="lastName">นามสกุล</label>
-                                    <input required readOnly className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="lastName" id="lastName" value={formData.lastName} onChange={handleInputChange} placeholder='ตัวอย่าง : สว่าง' />
+                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="lastName" id="lastName" value={formData.lastName} onChange={handleInputChange} placeholder='ตัวอย่าง : สว่าง' />
                                 </div>
                                 <div className="grid gap-2">
                                     <label htmlFor="lastName">เบอร์โทรที่ติดต่อได้</label>
