@@ -10,7 +10,7 @@ function Register() {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3000/register', {
+            const response = await fetch('http://210.246.202.185:3000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
