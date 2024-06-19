@@ -49,12 +49,12 @@ function ForgotPassword() {
                     <div className="text-center mt-4">
                         {message && <p className="text-slate-600">{message}</p>}
                         <button type='submit' className='bg-slate-300/20 px-4 py-3 rounded-xl text-xl font-semibold'>
-                            Send Reset Instructions
+                            ยืนยัน
                         </button>
                     </div>
                 </form>
                 <Link className='block text-center mt-4 underline text-slate-600' to="/login">
-                    Return to login
+                    หน้าเข้าสู่ระบบ
                 </Link>
             </div>
         </div>

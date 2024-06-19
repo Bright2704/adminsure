@@ -38,15 +38,15 @@ function Register() {
                     <form onSubmit={handleRegister}>
                         <div className="grid gap-4 mt-4">
                             <div className="grid gap-2">
-                                <label htmlFor="username">Username</label>
+                                <label htmlFor="username">ชื่อผู้ใช้</label>
                                 <input value={username} onChange={(e) => setUsername(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" placeholder='ตัวอย่าง : test001' />
                             </div>
                             <div className="grid gap-2">
-                                <label htmlFor="password">Password</label>
+                                <label htmlFor="password">รหัสผ่าน</label>
                                 <input value={password} onChange={(e) => setPassword(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="password" placeholder='ตัวอย่าง : 123456' />
                             </div>
                             <div className="grid gap-2">
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email">อีเมล</label>
                                 <input value={email} onChange={(e) => setEmail(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="email" placeholder='ตัวอย่าง : example@email.com' />
                             </div>
                         </div>
