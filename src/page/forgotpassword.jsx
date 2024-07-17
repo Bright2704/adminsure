@@ -8,8 +8,8 @@ function ForgotPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // const response = await fetch('https://api.adminsure.online/forgot-password', {
-                const response = await fetch('http://localhost:3000/forgot-password', {
+            const response = await fetch('https://api.adminsure.online/forgot-password', {
+                
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

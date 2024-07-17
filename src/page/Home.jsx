@@ -27,7 +27,7 @@ function Home() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/user', {
+                const response = await fetch('https://api.adminsure.online/api/user', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
