@@ -5,13 +5,14 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://api.adminsure.online/login', {
+            // const response = await fetch('https://api.adminsure.online/login', {
+            const response = await fetch('http://localhost:3000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,12 +53,28 @@ function Login() {
                                 </div>
                                 <div className="grid gap-2">
                                     <label htmlFor="password">รหัสผ่าน</label>
-                                    <input value={password} onChange={(e) => setPassword(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="password" placeholder='ตัวอย่าง : 123456' />
+                                    <div className="relative">
+                                        <input
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            required
+                                            className='h-[45px] rounded-xl border outline-none px-4 text-slate-800 w-full'
+                                            type={showPassword ? 'text' : 'password'}
+                                            placeholder='ตัวอย่าง : 123456'
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-800"
+                                        >
+                                            {showPassword ? 'ซ่อน' : 'แสดง'}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
                             <div className="flex justify-between items-center mt-4">
-                                <Link className='underline' to={'/forget-password'}>
+                                <Link className='underline' to={'/forgot-password'}>
                                     ลืมรหัสผ่าน?
                                 </Link>
                                 <Link className='underline' to={'/register'}>

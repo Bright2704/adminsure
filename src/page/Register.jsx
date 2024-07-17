@@ -4,18 +4,22 @@ import { Link } from 'react-router-dom';
 function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState(''); // State to hold the email
+    const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://api.adminsure.online/register', {
+            const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, password, email }) // Include email in the request body
+                body: JSON.stringify({ username, password, email, firstName, lastName, phone }) // Include new fields in the request body
             });
             const data = await response.json();
             console.log('Response from server:', data);
@@ -43,11 +47,29 @@ function Register() {
                             </div>
                             <div className="grid gap-2">
                                 <label htmlFor="password">รหัสผ่าน</label>
-                                <input value={password} onChange={(e) => setPassword(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="password" placeholder='ตัวอย่าง : 123456' />
+                                <div className="relative">
+                                    <input value={password} onChange={(e) => setPassword(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800 w-full' type={showPassword ? 'text' : 'password'} placeholder='ตัวอย่าง : 123456' />
+                                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-slate-800">
+                                        {showPassword ? 'ซ่อน' : 'แสดง'}
+                                    </button>
+                                </div>
                             </div>
+
                             <div className="grid gap-2">
                                 <label htmlFor="email">อีเมล</label>
                                 <input value={email} onChange={(e) => setEmail(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="email" placeholder='ตัวอย่าง : example@email.com' />
+                            </div>
+                            <div className="grid gap-2">
+                                <label htmlFor="firstName">ชื่อจริง</label>
+                                <input value={firstName} onChange={(e) => setFirstName(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" placeholder='ตัวอย่าง : John' />
+                            </div>
+                            <div className="grid gap-2">
+                                <label htmlFor="lastName">นามสกุล</label>
+                                <input value={lastName} onChange={(e) => setLastName(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" placeholder='ตัวอย่าง : Doe' />
+                            </div>
+                            <div className="grid gap-2">
+                                <label htmlFor="phone">เบอร์โทร</label>
+                                <input value={phone} onChange={(e) => setPhone(e.target.value)} required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" placeholder='ตัวอย่าง : 0812345678' />
                             </div>
                         </div>
 

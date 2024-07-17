@@ -13,29 +13,49 @@ function Home() {
         paymentMethod: '',
         accountNumber: '',
         username: '',
-        saleDate: '',
         buyerFirstName: '',
         buyerLastName: '',
         refund: '',
         phoneNumber: '',
         fileName: '',
+        saleDate: new Date().toISOString().split('T')[0] 
     });
 
-    const navigate = useNavigate()
 
-    // ตรวจสอบสิทธิ์การเข้าใช้งาน
+    const navigate = useNavigate();
+
     useEffect(() => {
-        const storage = window.localStorage;
-        const token = storage.getItem('token');
-        if (!token) {
-            navigate('/login'); // ถ้าไม่มี token ให้กลับไปหน้า Login
-        }
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/user', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                setFormData({
+                    firstName: data.firstname,
+                    lastName: data.lastname,
+                    phoneNumber: data.phone
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                navigate('/login'); // Redirect to login page if token is invalid or data fetching fails
+            }
+        };
+
+        fetchData();
     }, [navigate]);
 
     const handleLogout = () => {
         const storage = window.localStorage;
-        const token = storage.removeItem('token');
-        navigate('/login')
+        storage.removeItem('token');
+        navigate('/login');
     }
 
     const handleInputChange = (e) => {
@@ -81,7 +101,7 @@ function Home() {
         <>
             <div className="w-screen h-full bg-slate-900 p-4">
                 <div className="bg-slate-300 w-full h-full p-4 rounded-2xl drop-shadow-xl shadow-slate-100">
-                    <h1 className='text-center text-4xl te'>สัญญาซื้อขาย</h1>
+                    <h1 className='text-center text-4xl'>สัญญาซื้อขาย</h1>
                     <div className="w-full max-w-[550px] h-[3px] rounded-xl bg-gradient-to-r from-slate-500/0 to-slate-700 mx-auto my-4"></div>
 
                     <button onClick={handleLogout} className='mx-auto w-fit flex bg-slate-800/20 mb-4 px-5 py-3 rounded-xl'>ออกจากระบบ</button>
@@ -122,15 +142,15 @@ function Home() {
                             <div className="grid lg:grid-cols-2 gap-4 mt-4">
                                 <div className="grid gap-2">
                                     <label htmlFor="firstName">ชื่อจริง</label>
-                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="firstName" id="firstName" value={formData.firstName} onChange={handleInputChange} placeholder='ตัวอย่าง : สมชาย' />
+                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="firstName" id="firstName" value={formData.firstName} onChange={handleInputChange} placeholder='ตัวอย่าง : สมชาย' readOnly />
                                 </div>
                                 <div className="grid gap-2">
                                     <label htmlFor="lastName">นามสกุล</label>
-                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="lastName" id="lastName" value={formData.lastName} onChange={handleInputChange} placeholder='ตัวอย่าง : สว่าง' />
+                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="lastName" id="lastName" value={formData.lastName} onChange={handleInputChange} placeholder='ตัวอย่าง : สว่าง' readOnly />
                                 </div>
                                 <div className="grid gap-2">
                                     <label htmlFor="lastName">เบอร์โทรที่ติดต่อได้</label>
-                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="phoneNumber" id="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} placeholder='ตัวอย่าง : 0900000000' />
+                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="phoneNumber" id="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} placeholder='ตัวอย่าง : 0900000000' readOnly />
                                 </div>
                             </div>
 
@@ -161,7 +181,7 @@ function Home() {
                                 <div className="grid gap-2">
                                     <label htmlFor="paymentMethod">เลือก ช่องทางชำระเงิน</label>
                                     <select required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' name="paymentMethod" id="paymentMethod" value={formData.paymentMethod} onChange={handleInputChange}>
-                                        <option disabled selected value="">เลือกช่องทางชำระเงิน</option>
+                                        <option disabled value="">เลือกช่องทางชำระเงิน</option>
                                         <option value="ธนาคาร">ธนาคาร</option>
                                         <option value="ทรูวอลเล็ต">ทรูวอลเล็ต</option>
                                         <option value="พร้อมเพย์">พร้อมเพย์</option>
@@ -169,7 +189,10 @@ function Home() {
                                 </div>
                                 <div className="grid gap-2">
                                     <label htmlFor="accountNumber">เลขบัญชี</label>
-                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="accountNumber" id="accountNumber" value={formData.accountNumber} onChange={handleInputChange} placeholder='ตัวอย่าง : ธนาคารให้ใส่เลขบัญชี(ชื่อธนาคาร) , ทรูวอเลทใส่เบอร์ , พร้อมเพย์ใส่เบอร์' />
+                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800'
+                                        type="tel" name="accountNumber" id="accountNumber"
+                                        value={formData.accountNumber} onChange={handleInputChange}
+                                        pattern="[0-9]*" placeholder='ตัวอย่าง : ธนาคารให้ใส่เลขบัญชี(ชื่อธนาคาร) , ทรูวอเลทใส่เบอร์ , พร้อมเพย์ใส่เบอร์' />
                                 </div>
                             </div>
 
@@ -185,13 +208,13 @@ function Home() {
                             </div> */}
 
                             <div className="w-full h-[3px] bg-gradient-to-r from-slate-400/0 to-slate-800 my-4"></div>
-
-                            <h2 className='text-lg'>4. กรอก วัน / เดือน / ปี (ที่ขาย)</h2>
-
-                            <div className="grid gap-4 mt-4">
-                                <div className="grid gap-2">
-                                    <label htmlFor="saleDate">วัน / เดือน / ปี (ที่ขาย)</label>
-                                    <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="date" name="saleDate" id="saleDate" value={formData.saleDate} onChange={handleInputChange} placeholder='ตัวอย่าง : 26/06/2566' />
+                            <div>
+                                <h2 className='text-lg'>4. กรอก วัน / เดือน / ปี (ที่ขาย)</h2>
+                                <div className="grid gap-4 mt-4">
+                                    <div className="grid gap-2">
+                                        <label htmlFor="saleDate">วัน / เดือน / ปี (ที่ขาย)</label>
+                                        <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="date" name="saleDate" id="saleDate" value={formData.saleDate} onChange={handleInputChange} placeholder='ตัวอย่าง : 26/06/2566' />
+                                    </div>
                                 </div>
                             </div>
 
@@ -216,7 +239,7 @@ function Home() {
 
                             <div className="grid gap-4 mt-4">
                                 <div className="grid gap-2">
-                                    <label htmlFor="buyerFirstName">ราคาสินค้า</label>
+                                    <label htmlFor="refund">ราคาสินค้า</label>
                                     <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="text" name="refund" id="refund" value={formData.refund} onChange={handleInputChange} placeholder='ตัวอย่าง : 1000' />
                                 </div>
                             </div>
@@ -238,7 +261,7 @@ function Home() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export default Home;

@@ -14,6 +14,7 @@ Font.register({
     ],
 });
 
+
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'row',
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
 
 
 function MyPDFComponent({ formData }) {
+    
     return (
         <>
             <Document>
