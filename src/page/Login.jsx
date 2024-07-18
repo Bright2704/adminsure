@@ -6,12 +6,14 @@ function Login() {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [showErrorModal, setShowErrorModal] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const response = await fetch('https://api.adminsure.online/login', {
+            
             
                 method: 'POST',
                 headers: {
@@ -28,12 +30,26 @@ function Login() {
                 navigate('/'); // Navigate to the homepage
             } else {
                 setMessage(data.message || 'Login failed');
+                setShowErrorModal(true);
             }
         } catch (error) {
             console.error('Error logging in:', error);
             setMessage('Error logging in');
+            setShowErrorModal(true);
         }
     };
+
+    const ErrorModal = () => (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-slate-100 p-6 rounded-lg">
+                <h2 className="text-slate-800 font-bold text-2xl">ไม่สามารถเข้าสู่ระบบได้</h2>
+                <p className="text-red-500 text-lg">{message}</p>
+                <div className="flex justify-center mt-5">
+                    <button onClick={() => setShowErrorModal(false)} className="px-6 py-3 rounded bg-slate-700 text-slate-100 text-lg hover:bg-slate-600 transition duration-300 ease-in-out">ปิด</button>
+                </div>
+            </div>
+        </div>
+    );
 
     return (
         <>
@@ -91,6 +107,7 @@ function Login() {
                     </div>
                 </div>
             </div>
+            {showErrorModal && <ErrorModal />}
         </>
     )
 }

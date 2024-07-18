@@ -10,6 +10,8 @@ function Register() {
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
+    const [showSuccessModal, setShowSuccessModal] = useState(false); // สถานะการแสดง modal
+    const [showErrorModal, setShowErrorModal] = useState(false);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -22,13 +24,44 @@ function Register() {
                 body: JSON.stringify({ username, password, email, firstName, lastName, phone }) // Include new fields in the request body
             });
             const data = await response.json();
-            console.log('Response from server:', data);
-            setMessage(data.message || data.error);
+            if (response.ok) {
+                setShowSuccessModal(true);
+                setMessage('');
+            } else {
+                setMessage(data.message || data.error);
+                setShowErrorModal(true); // แสดง error modal หากการลงทะเบียนไม่สำเร็จ
+            }
         } catch (error) {
             console.error('Error registering user:', error);
             setMessage('Error registering user');
+            setShowErrorModal(true);
         }
     };
+
+    const SuccessModal = () => (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-slate-100 p-6 rounded-lg">
+                <h2 className="text-slate-800 font-bold text-2xl">สมัครใช้งานสำเร็จ!</h2>
+                <div className="flex justify-center mt-5">
+                <button onClick={() => setShowSuccessModal(false)} className="mt-5 px-6 py-3 rounded bg-slate-700 text-slate-100 text-lg hover:bg-slate-600 transition duration-300 ease-in-out ">ปิด</button>
+                </div>
+            </div>
+        </div>
+    );
+
+    const ErrorModal = () => (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-slate-100 p-6 rounded-lg">
+                <h2 className="text-slate-800 font-bold text-2xl">ไม่สามารถสร้างบัญชีได้</h2>
+                <p className="text-red-500 text-lg">{message}</p>
+                <div className="flex justify-center mt-5">
+                    <button onClick={() => setShowErrorModal(false)} className="px-6 py-3 rounded bg-slate-700 text-slate-100 text-lg hover:bg-slate-600 transition duration-300 ease-in-out">ปิด</button>
+                </div>
+            </div>
+        </div>
+    );
+    
+    
 
     return (
         <div className="w-screen h-full min-h-screen bg-slate-900 p-4">
@@ -85,7 +118,11 @@ function Register() {
                     </form>
                 </div>
             </div>
+            {showSuccessModal && <SuccessModal />} 
+            {showErrorModal && <ErrorModal />}
         </div>
+
+        
     );
 }
 

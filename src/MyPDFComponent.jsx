@@ -84,7 +84,7 @@ function MyPDFComponent({ formData }) {
                             ข้าพเจ้า ชื่อ {formData.firstName} นามสกุล {formData.lastName} ( ผู้ขาย ) 
                         </Text>
                         <Text style={styles.content}>
-                            ข้าพเจ้า ชื่อ {formData.buyerFirstName} นามสกุล {formData.buyerLastName} ( ผู้ซื้อ )
+                            ขายสินค้าให้ ชื่อ {formData.buyerFirstName} นามสกุล {formData.buyerLastName} ( ผู้ซื้อ )
                         </Text>
                         <Text style={styles.content}>
                             เบอร์โทรที่ติดต่อได้ ของผู้ขาย : {formData.phoneNumber}
@@ -96,7 +96,7 @@ function MyPDFComponent({ formData }) {
                             ช่องทางการชำระเงิน ( {formData.paymentMethod} )
                         </Text>
                         <Text style={styles.content}>
-                            ชื่อบัญชีรับเงิน ชื่อ {formData.buyerFirstName} นามสกุล {formData.buyerLastName} เลขบัญชี {formData.accountNumber}
+                            ชื่อบัญชีรับเงิน ชื่อ {formData.firstName} นามสกุล {formData.lastName} เลขบัญชี {formData.accountNumber}
                         </Text>
                         <Text style={styles.content}>
                             หากไอดีมีปัญหาและไม่สามารถตามไอดีคืนได้

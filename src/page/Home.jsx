@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
     const [imageID, setImageID] = useState(null);
     const [imageDetail, setImageDetail] = useState(null);
+    const Newdate = new Date().toISOString().split('T')[0];
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -18,7 +19,7 @@ function Home() {
         refund: '',
         phoneNumber: '',
         fileName: '',
-        saleDate: new Date().toISOString().split('T')[0] 
+        saleDate: Newdate 
     });
 
 
@@ -28,6 +29,7 @@ function Home() {
         const fetchData = async () => {
             try {
                 const response = await fetch('https://api.adminsure.online/api/user', {
+                  
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
@@ -58,6 +60,7 @@ function Home() {
         navigate('/login');
     }
 
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -87,9 +90,7 @@ function Home() {
         }
     };
 
-    useEffect(() => {
-        console.log(formData);
-    }, [formData]);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -213,7 +214,7 @@ function Home() {
                                 <div className="grid gap-4 mt-4">
                                     <div className="grid gap-2">
                                         <label htmlFor="saleDate">วัน / เดือน / ปี (ที่ขาย)</label>
-                                        <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="date" name="saleDate" id="saleDate" value={formData.saleDate} onChange={handleInputChange} placeholder='ตัวอย่าง : 26/06/2566' />
+                                        <input required className='h-[45px] rounded-xl border-0 outline-none px-4 text-slate-800' type="date" name="saleDate" id="saleDate" onChange={handleInputChange} placeholder='ตัวอย่าง : 26/06/2566' />
                                     </div>
                                 </div>
                             </div>
