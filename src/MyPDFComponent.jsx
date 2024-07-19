@@ -90,7 +90,7 @@ function MyPDFComponent({ formData }) {
                             เบอร์โทรที่ติดต่อได้ ของผู้ขาย : {formData.phoneNumber}
                         </Text>
                         <Text style={styles.content}>
-                            ได้ทำการ ขาย บัญชีเกม : {formData.accountType}
+                            ได้ทำการ ขาย บัญชีโซเชียล/ไอดีเกม : {formData.accountType}
                         </Text>
                         <Text style={styles.content}>
                             ช่องทางการชำระเงิน ( {formData.paymentMethod} )
@@ -99,7 +99,7 @@ function MyPDFComponent({ formData }) {
                             ชื่อบัญชีรับเงิน ชื่อ {formData.firstName} นามสกุล {formData.lastName} เลขบัญชี {formData.accountNumber}
                         </Text>
                         <Text style={styles.content}>
-                            หากไอดีมีปัญหาและไม่สามารถตามไอดีคืนได้
+                            หากบัญชีโซเชียลหรือไอดีเกมมีปัญหาและไม่สามารถใช้งานได้
                         </Text>
                         <Text style={styles.content}>
                             ยินดีคืนเงิน {formData.refund} บาท

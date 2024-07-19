@@ -16,7 +16,8 @@ function Register() {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://api.adminsure.online/register', {
+              const response = await fetch('https://api.adminsure.online/register', {
+                // const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

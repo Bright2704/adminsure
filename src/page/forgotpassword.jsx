@@ -9,6 +9,7 @@ function ForgotPassword() {
         e.preventDefault();
         try {
             const response = await fetch('https://api.adminsure.online/forgot-password', {
+                // const response = await fetch('http://localhost:3000/forgot-password', {
                 
                     method: 'POST',
                     headers: {
